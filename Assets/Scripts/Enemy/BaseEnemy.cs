@@ -9,10 +9,12 @@ public class BaseEnemy : MonoBehaviour
 {
     public static BaseEnemy Instance { get; private set; }
 
+    public Animator anim;
     public float health;
     public float speed;
     public float damage;
     public float coin;
+    private Vector3 startingPos;
 
     public virtual void Initialize(float health, float speed, float damage, float coin)
     {
@@ -24,18 +26,33 @@ public class BaseEnemy : MonoBehaviour
 
     private void Start()
     {
+        startingPos = transform.position;
         Initialize(health, speed, damage, coin);
     }
 
     public void TakeDamage(float damage)
     {
+        health -= damage;
         if (health > 0) 
         {
-            health -= damage;
+            anim.SetTrigger("TakeDamage");
         }
         else
         {
-            Destroy(gameObject);
+            health = 0;
+            StartCoroutine(Die());
         }
     }
+    public IEnumerator Die()
+    {
+        anim.SetTrigger("Die");
+        yield return new WaitForSeconds(0.433f);
+        Destroy(gameObject);
+    }
+
+    private void FindTarget()
+    {
+        
+    }
+
 }
