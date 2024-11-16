@@ -19,15 +19,16 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
     [SerializeField] public Transform m_ShootingPoint;
     [SerializeField] public Transform triangle;
+
+
     public GameObject bulletPrefab;
-    private Inventory inventory;
+
 
     Animator anim;
     private Vector2 lastMoveDirection;
 
     private void Awake()
     {
-        inventory = new Inventory();
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
             Instance = this;
         }
     }
-
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
    
     void ProcessInput()
     {
-
         if (joystickScript.joystickVec.magnitude > 0)
         {
             lastMoveDirection = joystickScript.joystickVec;

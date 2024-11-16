@@ -14,8 +14,18 @@ public class BaseEnemy : MonoBehaviour
     public float speed;
     public float damage;
     public float coin;
-    private Vector3 startingPos;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     public virtual void Initialize(float health, float speed, float damage, float coin)
     {
         this.health = health;
@@ -26,7 +36,6 @@ public class BaseEnemy : MonoBehaviour
 
     private void Start()
     {
-        startingPos = transform.position;
         Initialize(health, speed, damage, coin);
     }
 
