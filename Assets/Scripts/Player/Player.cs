@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
     public MovementJoystick joystickScript;
     private Rigidbody2D playerRb;
     [SerializeField] private float playerSpeed;
@@ -15,12 +17,26 @@ public class Player : MonoBehaviour
     [SerializeField] private bool hungerDrain;
     [SerializeField] private bool mentalDrain;
     private Vector2 moveDirection;
-    [SerializeField] private Transform m_ShootingPoint;
-    [SerializeField] private Transform triangle;
+    [SerializeField] public Transform m_ShootingPoint;
+    [SerializeField] public Transform triangle;
     public GameObject bulletPrefab;
+    private Inventory inventory;
 
     Animator anim;
     private Vector2 lastMoveDirection;
+
+    private void Awake()
+    {
+        inventory = new Inventory();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -34,10 +50,8 @@ public class Player : MonoBehaviour
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         StartCoroutine(MentalDrain());
-        
     }
 
-   
 
     void FixedUpdate()
     {

@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cerealbullet : MonoBehaviour
 {
     public float damage = 10f;
-    public float splitDamage = 5f;
-    public GameObject bulletPrefab;
 
     public void Start()
     {
@@ -30,12 +29,7 @@ public class Cerealbullet : MonoBehaviour
         }
     }
 
-    private void Spread()
-    {
-
-    }
-
-    private void SelfDestruct()
+    public void SelfDestruct()
     {
         Destroy(gameObject, 3);
     }

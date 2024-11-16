@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Environment
   - Enemy
+  - CerealBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
