@@ -10,4 +10,6 @@ public class NormalEnemy : BaseEnemy
     {
         base.Initialize(100, 2, 1, 10);
     }
+
+
 }

@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -19,7 +16,8 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
     [SerializeField] public Transform m_ShootingPoint;
     [SerializeField] public Transform triangle;
-
+    [SerializeField] private ShootingHandler m_ShootingHandler;
+    [SerializeField] private ShootingButtonHandler m_ShootingButtonHandler;
 
     public GameObject bulletPrefab;
 
@@ -50,12 +48,15 @@ public class Player : MonoBehaviour
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         StartCoroutine(MentalDrain());
+
+        m_ShootingButtonHandler.onPointerDown += OnShootButtonDown;
+        m_ShootingButtonHandler.onPointerUp += OnShootButtonUp;
     }
 
 
     void FixedUpdate()
     {
-        if(joystickScript != null)
+        if (joystickScript != null)
         {
             moveDirection = new Vector2(joystickScript.joystickVec.x * playerSpeed, joystickScript.joystickVec.y * playerSpeed);
             playerRb.velocity = moveDirection;
@@ -95,7 +96,7 @@ public class Player : MonoBehaviour
         anim.SetFloat("LastMoveY", lastMoveDirection.y);
     }
 
-   
+
     void ProcessInput()
     {
         if (joystickScript.joystickVec.magnitude > 0)
@@ -105,16 +106,10 @@ public class Player : MonoBehaviour
     }
 
 
-    public void Shoot()
-    {
-        GameObject bullet = Instantiate(bulletPrefab, triangle.position, m_ShootingPoint.rotation);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(m_ShootingPoint.up * 15f, ForceMode2D.Impulse);
-    }
 
     private void CalculateArrowDirection()
     {
-        if(moveDirection == Vector2.zero)
+        if (moveDirection == Vector2.zero)
         {
             m_ShootingPoint.gameObject.SetActive(false);
             return;
@@ -126,7 +121,7 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
-        if(playerHealth <= 0 || playerHunger == 0 || playerMental == 0)
+        if (playerHealth <= 0 || playerHunger == 0 || playerMental == 0)
         {
             return;
         }
@@ -135,7 +130,7 @@ public class Player : MonoBehaviour
     private void AddHealth()
     {
         playerHealth++;
-        if(playerHealth > 4) 
+        if (playerHealth > 4)
         {
             playerHealth = 4;
         }
@@ -154,7 +149,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void AddPlayerMental() 
+    public void AddPlayerMental()
     {
 
     }
@@ -175,5 +170,41 @@ public class Player : MonoBehaviour
             playerMental--;
             yield return new WaitForSeconds(5f);
         }
+    }
+
+    [SerializeField] private GameObject[] weapons;
+    private bool isShootingButtonHolding = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            m_ShootingHandler.SetWeapon(weapons[0].GetComponent<IWeapon>());
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            m_ShootingHandler.SetWeapon(weapons[1].GetComponent<IWeapon>());
+        }        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            m_ShootingHandler.SetWeapon(weapons[2].GetComponent<IWeapon>());
+        }
+
+        if (isShootingButtonHolding)
+        {
+            m_ShootingHandler.OnShoot();
+        }
+    }
+
+    private void OnShootButtonDown()
+    {
+        m_ShootingHandler.OnShootStart();
+        isShootingButtonHolding = true;
+    }
+
+    private void OnShootButtonUp()
+    {
+        m_ShootingHandler.OnShootEnd();
+        isShootingButtonHolding = false;
     }
 }

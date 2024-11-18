@@ -49,13 +49,16 @@ public class BaseEnemy : MonoBehaviour
         else
         {
             health = 0;
-            StartCoroutine(Die());
+            Die();
         }
     }
-    public IEnumerator Die()
+    public void Die()
     {
         anim.SetTrigger("Die");
-        yield return new WaitForSeconds(0.433f);
+    }
+
+    public void OnAnimationDeadEventEnd()
+    {
         Destroy(gameObject);
     }
 
