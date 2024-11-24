@@ -10,6 +10,5 @@ public class UDoorEvent : MonoBehaviour
     public void OnUDoorOpen()
     {
         uDoorSpriteRenderer.sprite = uDoorOpenSprite;
-
     }
 }
