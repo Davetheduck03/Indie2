@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &112458104 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7044809652817524856, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
+  m_PrefabInstance: {fileID: 848757490}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &267686116
 GameObject:
   m_ObjectHideFlags: 0
@@ -15071,6 +15076,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &520694077 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7392012180430788837, guid: b672362373090014c9621d54df2cd436, type: 3}
+  m_PrefabInstance: {fileID: 4110248440782440204}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &848757490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15079,6 +15089,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 380075228669976966, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 112458104}
+    - target: {fileID: 380075228669976966, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
+      propertyPath: playerPos
+      value: 
+      objectReference: {fileID: 520694077}
+    - target: {fileID: 421327144453668097, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8043280692579084479, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -20312,7 +20334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7392012180430788837, guid: b672362373090014c9621d54df2cd436, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.32
+      value: -11.32
       objectReference: {fileID: 0}
     - target: {fileID: 7392012180430788837, guid: b672362373090014c9621d54df2cd436, type: 3}
       propertyPath: m_LocalPosition.y

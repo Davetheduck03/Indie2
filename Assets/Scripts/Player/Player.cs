@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField] private bool hungerDrain;
     [SerializeField] private bool mentalDrain;
     private Vector2 moveDirection;
-    [SerializeField] public Transform m_ShootingPoint;
-    [SerializeField] public Transform triangle;
+    public Transform m_ShootingPoint;
+    public Transform triangle;
     [SerializeField] private ShootingHandler m_ShootingHandler;
     [SerializeField] private ShootingButtonHandler m_ShootingButtonHandler;
 
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
-        playerSpeed = 3f;
+        playerSpeed = 4f;
         playerHealth = 4;
         playerHunger = 100;
         playerMental = 100;

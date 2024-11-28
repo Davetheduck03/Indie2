@@ -8,7 +8,6 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] Collider2D doorCollider;
     [SerializeField] Animator uDoorAnimator;
     [SerializeField] Animator lDoorAnimator;
-    [SerializeField] GameObject door;
     [SerializeField] bool playerInside = false;
     [SerializeField] LayerMask layerPlayer;
 
@@ -31,8 +30,7 @@ public class Door : MonoBehaviour, IInteractable
 
     private void PlayerCheck()
     {
-         Vector2 doorPos = door.transform.position;
-         if(Physics2D.OverlapCircle(doorPos, 2f, layerPlayer))
+         if(Physics2D.OverlapCircle(transform.position, 2f, layerPlayer))
          {
                 playerInside = true;
          }

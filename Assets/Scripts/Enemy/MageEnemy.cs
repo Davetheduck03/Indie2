@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MageEnemy : BaseEnemy
 {
-    public override void Initialize(float health, float speed, float damage, float coin)
+    public override void Initialize(float health, float speed, float damage)
     {
-        base.Initialize(100, 2, 1, 10);
+        base.Initialize(100, 2, 1);
     }
 }
