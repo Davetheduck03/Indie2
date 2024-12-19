@@ -47,20 +47,6 @@ public class BaseEnemy : MonoBehaviour
         this.damage = damage;
     }
 
-    private void FixedUpdate()
-    {
-        if (FindTarget())
-        {
-            MoveTowardsPlayer();
-            Flip();
-            Attack();
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-            return;
-        }
-    }
 
     private void Start()
     {
