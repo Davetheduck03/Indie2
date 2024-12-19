@@ -4,7 +4,6 @@ using UnityEngine;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using System.Linq;
-using Unity.PlasticSCM.Editor.WebApi;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
@@ -22,7 +21,6 @@ public class BaseEnemy : MonoBehaviour
     protected Vector2 movementDirection;
     protected Rigidbody2D rb;
     protected Vector2 direction;
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -51,7 +49,7 @@ public class BaseEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(FindTarget())
+        if (FindTarget())
         {
             MoveTowardsPlayer();
             Flip();
@@ -73,7 +71,7 @@ public class BaseEnemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        if (health > 0) 
+        if (health > 0)
         {
             anim.SetTrigger("TakeDamage");
         }
@@ -93,9 +91,9 @@ public class BaseEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private bool FindTarget()
+    public bool FindTarget()
     {
-        if(Physics2D.OverlapCircle(transform.position, 8, playerLayer))
+        if (Physics2D.OverlapCircle(transform.position, 8, playerLayer))
         {
             return true;
         }
@@ -107,7 +105,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void Flip()
     {
-        movementDirection.x = Mathf.Sin(Time.time); 
+        movementDirection.x = Mathf.Sin(Time.time);
         transform.Translate(movementDirection * speed * Time.deltaTime);
         if (movementDirection.x < 0)
         {

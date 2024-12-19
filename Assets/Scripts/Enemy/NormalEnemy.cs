@@ -1,56 +1,101 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class NormalEnemy : BaseEnemy
 {
-    private readonly float cooldownTime = 2.5f;
-    private float cooldownTimer = 0f;
-    private bool isOnCooldown = false;
+    [SerializeField] private float chargeSpeedMultiplier;
+    [SerializeField] private float chargeCooldown;
+
+    private enum EnemyState { Idle, Following, Charging }
+    private EnemyState currentState = EnemyState.Idle;
+    private Vector2 chargeTarget;
+    private bool isCharging = false;
+    private float originalSpeed;
 
     public override void Initialize(float health, float speed, float damage)
     {
         base.Initialize(100, 1f, 1);
+        originalSpeed = this.speed;
     }
 
-    
-    public override void Attack()
+    private void FixedUpdate()
     {
-        if (Physics2D.OverlapCircle(transform.position, 4, playerLayer) && isOnCooldown == false)
+        switch (currentState)
         {
-            Charge();
-            isOnCooldown |= true;
-            if (isOnCooldown)
-            {
-                cooldownTimer = cooldownTime;
-                cooldownTimer -= Time.deltaTime; 
-                if (cooldownTimer <= 0f)
+            case EnemyState.Idle:
+                rb.velocity = Vector2.zero;
+                if (FindTarget())
                 {
-                    isOnCooldown = false; 
-                    cooldownTimer = 0f;  
+                    currentState = EnemyState.Following;
                 }
-            }
-        }
-        else
-        {
-            speed = 1f;
+                break;
+
+            case EnemyState.Following:
+                if (FindTarget())
+                {
+                    MoveTowardsPlayer();
+                    Flip();
+                    if (ReadyToCharge())
+                    {
+                        StartCharge();
+                    }
+                }
+                else
+                {
+                    currentState = EnemyState.Idle;
+                }
+                break;
+
+            case EnemyState.Charging:
+                PerformCharge();
+                break;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private bool ReadyToCharge()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        return Vector2.Distance(transform.position, playerPos.position) <= 4 && !isCharging;
+    }
+
+    private void StartCharge()
+    {
+        isCharging = true;
+        chargeTarget = playerPos.position;
+        speed *= chargeSpeedMultiplier;
+        currentState = EnemyState.Charging;
+        anim.SetTrigger("Charge");
+    }
+
+    private void PerformCharge()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, chargeTarget, speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, chargeTarget) < 0.1f || HitPlayer())
         {
-            rb.velocity = Vector2.zero;
-            
+            StopCharge();
         }
     }
 
-    private void Charge()
+    private bool HitPlayer()
     {
-        speed = 0.25f;
-        rb.AddForce(direction * 10f);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, 1f, playerLayer);
+        if (hit != null && hit.CompareTag("Player"))
+        {
+            Player.Instance.TakeDamage(damage);
+        }
+        return false;
     }
 
+    private void StopCharge()
+    {
+        isCharging = false;
+        speed = originalSpeed;
+        currentState = EnemyState.Following;
+        StartCoroutine(ChargeCooldown());
+    }
+
+    private IEnumerator ChargeCooldown()
+    {
+        yield return new WaitForSeconds(chargeCooldown);
+        isCharging = false;
+    }
 }

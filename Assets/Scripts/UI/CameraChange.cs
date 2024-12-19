@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraChange : MonoBehaviour
 {
-    public Transform cameraTargetPosition; 
+    public Transform cameraTargetPosition;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) 
