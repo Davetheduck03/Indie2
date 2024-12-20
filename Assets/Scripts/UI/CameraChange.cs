@@ -9,7 +9,7 @@ public class CameraChange : MonoBehaviour
     {
         if (collision.CompareTag("Player")) 
         {
-            Camera.main.transform.position = new Vector3(
+                Camera.main.transform.position = new Vector3(
                 cameraTargetPosition.position.x,
                 cameraTargetPosition.position.y,
                 Camera.main.transform.position.z); 
