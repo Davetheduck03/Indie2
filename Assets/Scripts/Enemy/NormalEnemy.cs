@@ -63,7 +63,6 @@ public class NormalEnemy : BaseEnemy
         chargeTarget = playerPos.position;
         speed *= chargeSpeedMultiplier;
         currentState = EnemyState.Charging;
-        anim.SetTrigger("Charge");
     }
 
     private void PerformCharge()
