@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3543378779043037756
 SpriteRenderer:
@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 100
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -127,10 +127,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7826f10c36a938a4189a46e2544a9679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  health: 0
+  speed: 0
+  damage: 0
+  coin: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   playerPos: {fileID: 0}
+  chargeSpeedMultiplier: 0
+  chargeCooldown: 0
 --- !u!58 &1808499515473382347
 CircleCollider2D:
   m_ObjectHideFlags: 0

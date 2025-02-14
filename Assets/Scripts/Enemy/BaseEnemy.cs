@@ -11,6 +11,10 @@ public class BaseEnemy : MonoBehaviour
 {
     public static BaseEnemy Instance { get; private set; }
 
+    protected enum EnemyState { Idle, Chase, Attack }
+
+    EnemyState Idle;
+
     [SerializeField] protected Animator anim;
     [SerializeField] protected float health;
     [SerializeField] protected float speed;
@@ -18,9 +22,11 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float coin;
     [SerializeField] protected LayerMask playerLayer;
     [SerializeField] protected Transform playerPos;
+
     protected Vector2 movementDirection;
     protected Rigidbody2D rb;
     protected Vector2 direction;
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
