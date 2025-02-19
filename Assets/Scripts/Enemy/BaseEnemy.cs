@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using Pathfinding;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class BaseEnemy : MonoBehaviour
 
     protected enum EnemyState { Idle, Chase, Attack }
 
-    EnemyState Idle;
 
     [SerializeField] protected Animator anim;
     [SerializeField] protected float health;
@@ -22,17 +22,10 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float coin;
     [SerializeField] protected LayerMask playerLayer;
     [SerializeField] protected Transform playerPos;
-
+    
     protected Vector2 movementDirection;
     protected Rigidbody2D rb;
     protected Vector2 direction;
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 8);
-        Gizmos.DrawWireSphere(transform.position, 4);
-    }
 
 
     private void Awake()
