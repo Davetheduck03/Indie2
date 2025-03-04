@@ -15234,6 +15234,10 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7866371601203841879, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
+      propertyPath: m_WalkableMask
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8043280692579084479, guid: 688618d17360f9e43a66b68fe835c17f, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -20442,7 +20446,7 @@ MonoBehaviour:
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 826490f6b72b95a43b5a726086867b89, type: 2}
 --- !u!4 &1555106610
 Transform:
   m_ObjectHideFlags: 0
