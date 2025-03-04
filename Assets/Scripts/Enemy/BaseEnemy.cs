@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using Pathfinding;
 
 public class BaseEnemy : MonoBehaviour
 {
