@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
 
     public GameObject bulletPrefab;
 
-
     Animator anim;
     private Vector2 lastMoveDirection;
 

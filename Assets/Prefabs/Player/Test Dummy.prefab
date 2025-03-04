@@ -190,7 +190,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6093096767385650297}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.20040894, y: 0.000015258789, z: 0}
   m_LocalScale: {x: 0.9344893, y: 0.9344893, z: 0.9344893}
   m_ConstrainProportionsScale: 0
@@ -200,7 +200,7 @@ Transform:
   - {fileID: 1805210626529862485}
   - {fileID: 3806948598742934375}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9067409333346406604
 SpriteRenderer:
@@ -242,7 +242,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 446470839
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1448190626, guid: 472875795b2be304dabd496cb2859432, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -298,8 +298,8 @@ MonoBehaviour:
   playerHunger: 0
   playerMental: 0
   playerHealth: 0
-  hungerDrain: 0
-  mentalDrain: 0
+  hungerDrain: 1
+  mentalDrain: 1
   m_ShootingPoint: {fileID: 7841662486493661781}
   triangle: {fileID: 1917342681968146449}
   m_ShootingHandler: {fileID: 5870713371536521179}
