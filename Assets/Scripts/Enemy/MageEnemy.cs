@@ -48,7 +48,7 @@ public class RangedEnemy : BaseEnemy
 
     public override void Initialize(float health, float speed, float damage)
     {
-        base.Initialize(80, 0.8f, 2);
+        base.Initialize(30f, 0.8f, 2);
     }
 
     void Update()
@@ -68,6 +68,7 @@ public class RangedEnemy : BaseEnemy
                 if (Time.time >= nextAttackTime)
                 {
                     Attack();
+                    anim.SetTrigger("Attack");
                     nextAttackTime = Time.time + 1f / attackRate;
                 }
             }
@@ -80,27 +81,24 @@ public class RangedEnemy : BaseEnemy
 
     public override void Attack()
     {
+
         if (!playerPos || !projectilePrefab) return;
 
         Vector2 direction = (playerPos.position - firePoint.position).normalized;
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-        // Add and configure projectile components
         ProjectileData projectileScript = projectile.AddComponent<ProjectileData>();
         projectileScript.damage = damage;
         projectileScript.speed = projectileSpeed;
         projectileScript.direction = direction;
         projectileScript.lifetime = projectileLifetime;
 
-        // Add required physics components if missing
         if (!projectile.GetComponent<Rigidbody2D>())
             projectile.AddComponent<Rigidbody2D>().gravityScale = 0;
 
-        // Set default collider if missing
         if (!projectile.GetComponent<Collider2D>())
             projectile.AddComponent<CircleCollider2D>().isTrigger = true;
 
-        // Set visual rotation
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
