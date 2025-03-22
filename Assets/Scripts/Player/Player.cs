@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         StartCoroutine(MentalDrain());
-
+        
         m_ShootingButtonHandler.onPointerDown += OnShootButtonDown;
         m_ShootingButtonHandler.onPointerUp += OnShootButtonUp;
     }
@@ -120,10 +121,7 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
-        if (playerHealth <= 0 || playerHunger == 0 || playerMental == 0)
-        {
-            return;
-        }
+        Debug.Log("You Died");
     }
 
     private void AddHealth()
@@ -140,15 +138,25 @@ public class Player : MonoBehaviour
         if (playerHealth > 0)
         {
             playerHealth -= damage;
+            Camera camera = Camera.main;
+            Shake shake = camera.GetComponent<Shake>();
+            shake.startShake = true;
+        }
+        else
+        {
+            Camera camera = Camera.main;
+            Shake shake = camera.GetComponent<Shake>();
+            shake.startShake = true;
+            PlayerDead();
         }
     }
 
-    public void AddPlayerHunger()
+    public void AddPlayerHunger(int hunger)
     {
 
     }
 
-    public void AddPlayerMental()
+    public void AddPlayerMental(int mental)
     {
 
     }
@@ -159,6 +167,10 @@ public class Player : MonoBehaviour
         {
             playerHunger--;
             yield return new WaitForSeconds(2f);
+            if (playerHunger <= 0)
+            {
+                PlayerDead();
+            }
         }
     }
 
@@ -168,6 +180,10 @@ public class Player : MonoBehaviour
         {
             playerMental--;
             yield return new WaitForSeconds(5f);
+            if( playerMental <= 0)
+            {
+                PlayerDead();
+            }
         }
     }
 
