@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
     public Transform triangle;
     [SerializeField] private ShootingHandler m_ShootingHandler;
     [SerializeField] private ShootingButtonHandler m_ShootingButtonHandler;
+    public event Action<float> OnHealthChanged;
+    public event Action<float> OnHungerChanged;
 
     public GameObject bulletPrefab;
 
