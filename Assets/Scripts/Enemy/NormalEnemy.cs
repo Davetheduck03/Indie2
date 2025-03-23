@@ -14,7 +14,7 @@ public class NormalEnemy : BaseEnemy
 
     public override void Initialize(float health, float speed, float damage)
     {
-        base.Initialize(50f, 1f, 1);
+        base.Initialize(50f, 1f, 20);
     }
 
     private void Update()

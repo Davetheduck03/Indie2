@@ -24,7 +24,7 @@ public class TankEnemy : BaseEnemy
 
     public override void Initialize(float health, float speed, float damage)
     {
-        base.Initialize(80f, 0.7f, 3);
+        base.Initialize(80f, 0.7f, 10);
         stoppingThreshold = attackRadius * 0.9f;
     }
 

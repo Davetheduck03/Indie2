@@ -48,7 +48,7 @@ public class RangedEnemy : BaseEnemy
 
     public override void Initialize(float health, float speed, float damage)
     {
-        base.Initialize(30f, 0.8f, 2);
+        base.Initialize(30f, 0.8f, 15);
     }
 
     void Update()

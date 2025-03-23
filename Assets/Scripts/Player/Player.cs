@@ -9,10 +9,9 @@ public class Player : MonoBehaviour
 
     public MovementJoystick joystickScript;
     private Rigidbody2D playerRb;
-    [SerializeField] private float playerSpeed;
-    [SerializeField] private float playerHunger;
-    [SerializeField] private float playerMental;
-    [SerializeField] private float playerHealth;
+    public float playerSpeed;
+    public float playerHunger;
+    public float playerHealth;
     [SerializeField] private bool hungerDrain;
     [SerializeField] private bool mentalDrain;
     private Vector2 moveDirection;
@@ -20,6 +19,7 @@ public class Player : MonoBehaviour
     public Transform triangle;
     [SerializeField] private ShootingHandler m_ShootingHandler;
     [SerializeField] private ShootingButtonHandler m_ShootingButtonHandler;
+
     public event Action<float> OnHealthChanged;
     public event Action<float> OnHungerChanged;
 
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -44,14 +44,13 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
         playerSpeed = 4f;
-        playerHealth = 4;
-        playerHunger = 100;
-        playerMental = 100;
+        playerHealth = 100f;
+        playerHunger = 100f;
         mentalDrain = true;
         hungerDrain = true;
         StartCoroutine(HungerDrain());
-        StartCoroutine(MentalDrain());
-        
+        OnHealthChanged?.Invoke(playerHealth / 100f);
+        OnHungerChanged?.Invoke(playerHunger / 100f);
         m_ShootingButtonHandler.onPointerDown += OnShootButtonDown;
         m_ShootingButtonHandler.onPointerUp += OnShootButtonUp;
     }
@@ -127,12 +126,16 @@ public class Player : MonoBehaviour
         Debug.Log("You Died");
     }
 
-    private void AddHealth()
+    private void AddHealth(float health)
     {
-        playerHealth++;
-        if (playerHealth > 4)
+        if(playerHealth >= 100)
         {
-            playerHealth = 4;
+            playerHealth = 100;
+        }
+        else
+        {
+            playerHealth += health;
+            OnHealthChanged?.Invoke(playerHealth / 100f);
         }
     }
 
@@ -141,49 +144,32 @@ public class Player : MonoBehaviour
         if (playerHealth > 0)
         {
             playerHealth -= damage;
+            OnHealthChanged?.Invoke(playerHealth / 100f);
             Camera camera = Camera.main;
             Shake shake = camera.GetComponent<Shake>();
             shake.startShake = true;
-        }
-        else
-        {
-            Camera camera = Camera.main;
-            Shake shake = camera.GetComponent<Shake>();
-            shake.startShake = true;
-            PlayerDead();
-        }
-    }
-
-    public void AddPlayerHunger(int hunger)
-    {
-
-    }
-
-    public void AddPlayerMental(int mental)
-    {
-
-    }
-
-    public IEnumerator HungerDrain()
-    {
-        while (hungerDrain == true)
-        {
-            playerHunger--;
-            yield return new WaitForSeconds(2f);
-            if (playerHunger <= 0)
+            if(playerHealth <= 0)
             {
                 PlayerDead();
             }
         }
     }
 
-    public IEnumerator MentalDrain()
+    public void AddPlayerHunger(int hunger)
     {
-        while (mentalDrain == true)
+        playerHunger = Mathf.Clamp(playerHunger + hunger, 0, 100);
+        OnHungerChanged?.Invoke(playerHunger / 100f);
+    }
+
+
+    public IEnumerator HungerDrain()
+    {
+       while (hungerDrain == true)
         {
-            playerMental--;
-            yield return new WaitForSeconds(5f);
-            if( playerMental <= 0)
+            playerHunger -= 1;
+            OnHungerChanged?.Invoke(playerHunger / 100f);
+            yield return new WaitForSeconds(2f);
+            if (playerHunger <= 0)
             {
                 PlayerDead();
             }
