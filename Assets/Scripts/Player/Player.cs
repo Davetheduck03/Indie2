@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -123,7 +124,7 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
-        Debug.Log("You Died");
+        SceneManager.LoadScene("Test");
     }
 
     private void AddHealth(float health)
