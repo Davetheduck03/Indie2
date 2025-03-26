@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [Header("Hunger Settings")]
     public Image hungerBar;
 
+    [SerializeField] private GameObject inventoryUI;
+
     private void OnEnable()
     {
         if (Player.Instance != null)
@@ -43,7 +45,7 @@ public class UIManager : MonoBehaviour
         Player.Instance.OnHealthChanged -= UpdateHealthBar;
         Player.Instance.OnHungerChanged -= UpdateHungerBar;
     }
-
+    
     private void UpdateHealthBar(float healthPercentage)
     {
         healthBar.fillAmount = healthPercentage;
@@ -52,5 +54,13 @@ public class UIManager : MonoBehaviour
     private void UpdateHungerBar(float hungerPercentage)
     {
         hungerBar.fillAmount = hungerPercentage;
+    }
+
+    public void EnableInventoryUI()
+    {
+        if (!inventoryUI.activeSelf)
+        { inventoryUI.SetActive(true); }
+        else 
+        { inventoryUI.SetActive(false); }
     }
 }

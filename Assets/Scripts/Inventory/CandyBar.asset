@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e597dc2cd067798419c334de988b6c9c, type: 3}
+  m_Name: CandyBar
+  m_EditorClassIdentifier: 
+  itemID: 0
+  itemName: Candy Bar
+  maxStack: 5
+  icon: {fileID: 21300000, guid: 9190af9f1d1ffb04eadb178e6f144053, type: 3}

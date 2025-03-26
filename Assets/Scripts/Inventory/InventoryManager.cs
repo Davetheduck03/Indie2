@@ -12,6 +12,18 @@ public class InventoryManager : MonoBehaviour
 
     private List<InventorySlot> slots = new List<InventorySlot>();
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         InitializeInventory();

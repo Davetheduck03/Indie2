@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class InventorySlot : MonoBehaviour
 {
-    [SerializeField] private Image iconImage;
-    [SerializeField] private Text countText;
+    public Image iconImage;
+    public Text countText;
 
     public InventoryItemSO Item { get; private set; }
     public int StackCount { get; private set; }
@@ -26,10 +26,14 @@ public class InventorySlot : MonoBehaviour
 
     void UpdateUI()
     {
-        iconImage.sprite = Item.icon;
-        iconImage.enabled = true;
-        countText.text = StackCount > 1 ? StackCount.ToString() : "";
-        countText.gameObject.SetActive(StackCount > 1);
+        if (HasItem)
+        {
+            iconImage.sprite = Item.icon;
+            iconImage.enabled = true;
+            countText.text = StackCount > 1 ? StackCount.ToString() : "";
+            countText.gameObject.SetActive(StackCount > 1);
+        }
+        else ClearSlot();
     }
 
     public void ClearSlot()
