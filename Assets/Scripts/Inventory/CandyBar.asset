@@ -16,3 +16,6 @@ MonoBehaviour:
   itemName: Candy Bar
   maxStack: 5
   icon: {fileID: 21300000, guid: 9190af9f1d1ffb04eadb178e6f144053, type: 3}
+  itemType: 0
+  healthRestoreAmount: 0
+  hungerRestoreAmount: 10

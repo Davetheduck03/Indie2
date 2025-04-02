@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("Test");
     }
 
-    private void AddHealth(float health)
+    public void AddHealth(float health)
     {
         if(playerHealth >= 100)
         {
@@ -162,6 +162,11 @@ public class Player : MonoBehaviour
         OnHungerChanged?.Invoke(playerHunger / 100f);
     }
 
+    public void SpeedModifier(float amount, float time)
+    {
+        StartCouroutine();
+        playerSpeed * amount;
+    }
 
     public IEnumerator HungerDrain()
     {

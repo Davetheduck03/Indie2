@@ -1,13 +1,14 @@
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     public Image iconImage;
     public Text countText;
 
-    public InventoryItemSO Item { get; private set; }
-    public int StackCount { get; private set; }
+    public InventoryItemSO Item { get; set; }
+    public int StackCount { get; set; }
     public bool HasItem => Item != null;
     public bool IsFull => HasItem && StackCount >= Item.maxStack;
 
@@ -18,13 +19,21 @@ public class InventorySlot : MonoBehaviour
         UpdateUI();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            InventoryManager.Instance.OnSlotClicked(this);
+        }
+    }
+
     public void AddToStack(int amount)
     {
         StackCount += amount;
         UpdateUI();
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         if (HasItem)
         {

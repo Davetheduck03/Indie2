@@ -67,4 +67,22 @@ public class InventoryManager : MonoBehaviour
         }
         return false; // Inventory full
     }
+
+    public void OnSlotClicked(InventorySlot slot)
+    {
+        if (!slot.HasItem) return;
+
+
+        slot.Item.OnUseItem();
+
+            slot.StackCount--;
+            if (slot.StackCount <= 0)
+            {
+                slot.ClearSlot();
+            }
+            else
+            {
+                slot.UpdateUI();
+            }
+    }
 }

@@ -16,3 +16,6 @@ MonoBehaviour:
   itemName: Banana
   maxStack: 5
   icon: {fileID: 21300000, guid: 7b2998f79d2864b4c950b0072f142ea1, type: 3}
+  itemType: 0
+  healthRestoreAmount: 0
+  hungerRestoreAmount: 15
