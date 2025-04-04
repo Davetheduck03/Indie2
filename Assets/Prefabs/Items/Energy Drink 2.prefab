@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1482345068259617300}
   - component: {fileID: 5943587845666430869}
   m_Layer: 0
-  m_Name: Candy Bar 7
+  m_Name: Energy Drink 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 1345438453
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9190af9f1d1ffb04eadb178e6f144053, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 828692f1896c4d14d83fa56119c09f5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c090017791260479360b4f00a19686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: a494532855955ce4a9e2987e8b621863, type: 2}
+  itemData: {fileID: 11400000, guid: 56b203a2280dd3a4fa346a019aff2215, type: 2}
   amount: 1
 --- !u!58 &5943587845666430869
 CircleCollider2D:

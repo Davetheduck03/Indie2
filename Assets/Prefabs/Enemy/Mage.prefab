@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9151802962183081468}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3059808145497865893}
   - component: {fileID: 8149876111770509618}
   - component: {fileID: 5987451105877784031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mage
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ Transform:
   m_Children:
   - {fileID: 9151802962183081468}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3543378779043037756
 SpriteRenderer:
@@ -174,7 +174,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 529644666968386015, guid: 0e769365debdd514ab4d6610d7b4f1ce, type: 3}
   firePoint: {fileID: 9151802962183081468}
   attackRate: 0.5
-  projectileSpeed: 3
+  projectileSpeed: 5
   projectileLifetime: 3
 --- !u!95 &173952893419153826
 Animator:

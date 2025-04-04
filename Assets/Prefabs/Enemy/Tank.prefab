@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6420284405483873368}
   - component: {fileID: 1764667064296557251}
   - component: {fileID: -998707619492309209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tank
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3543378779043037756
 SpriteRenderer:

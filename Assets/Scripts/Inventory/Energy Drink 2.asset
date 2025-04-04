@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e597dc2cd067798419c334de988b6c9c, type: 3}
-  m_Name: Energy Drink
+  m_Name: Energy Drink 2
   m_EditorClassIdentifier: 
-  itemID: 2
-  itemName: Energy Drink
+  itemID: 4
+  itemName: Energy Drink 2
   maxStack: 5
-  icon: {fileID: 21300000, guid: 835f0b0b69e2db544a014eb38ca4b68f, type: 3}
+  icon: {fileID: 21300000, guid: 828692f1896c4d14d83fa56119c09f5e, type: 3}
   itemType: 3
   healthRestoreAmount: 0
   hungerRestoreAmount: 0
-  buffTime: 60
-  speedModifier: 1.5
+  buffTime: 120
+  speedModifier: 1.25

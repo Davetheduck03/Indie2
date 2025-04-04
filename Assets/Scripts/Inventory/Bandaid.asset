@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bandaid
   m_EditorClassIdentifier: 
   itemID: 3
-  itemName: Banana
+  itemName: Bandaid
   maxStack: 5
   icon: {fileID: 21300000, guid: b1de889cf97024e4186276aeb2b9a759, type: 3}
   itemType: 1

@@ -192,16 +192,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6093096767385650297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.20040894, y: 0.000015258789, z: 0}
+  m_LocalPosition: {x: -18.15, y: -0.69, z: 0}
   m_LocalScale: {x: 0.9344893, y: 0.9344893, z: 0.9344893}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7841662486493661781}
   - {fileID: 8615052598471659790}
-  - {fileID: 1805210626529862485}
   - {fileID: 3806948598742934375}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9067409333346406604
 SpriteRenderer:
@@ -306,9 +305,8 @@ MonoBehaviour:
   m_ShootingButtonHandler: {fileID: 0}
   bulletPrefab: {fileID: 529644666968386015, guid: 88739afa8905b3d45a123477ada60e4c, type: 3}
   weapons:
-  - {fileID: 2272233523049124930}
-  - {fileID: 8739188210797802395}
   - {fileID: 6571642179872214820}
+  - {fileID: 2272233523049124930}
 --- !u!95 &6535201614191286112
 Animator:
   serializedVersion: 5
@@ -413,7 +411,7 @@ GameObject:
   - component: {fileID: 3806948598742934375}
   - component: {fileID: 2042198546301131595}
   m_Layer: 3
-  m_Name: MachineGun
+  m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,49 +444,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b464e0f30e8fcc141b6e7d179202c7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Bullet: {fileID: 529644666968386015, guid: 88739afa8905b3d45a123477ada60e4c, type: 3}
---- !u!1 &8739188210797802395
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1805210626529862485}
-  - component: {fileID: 4645134912945435704}
-  m_Layer: 3
-  m_Name: Shotgun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1805210626529862485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8739188210797802395}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7392012180430788837}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4645134912945435704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8739188210797802395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8922b57ececf33647b4475b8e3af7f84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Bullet: {fileID: 529644666968386015, guid: 88739afa8905b3d45a123477ada60e4c, type: 3}
+  attackRadius: 1.5
+  attackAngle: 90
+  damage: 1
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  knockbackForce: 5

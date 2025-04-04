@@ -49,8 +49,8 @@ public class Player : MonoBehaviour
         currentSpeed = playerSpeed;
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
-        playerHealth = 100f;
-        playerHunger = 100f;
+        playerHealth = 10000f;
+        playerHunger = 10000f;
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         OnHealthChanged?.Invoke(playerHealth / 100f);
@@ -117,7 +117,7 @@ private void CalculateArrowDirection()
     {
         if (moveDirection == Vector2.zero)
         {
-            m_ShootingPoint.gameObject.SetActive(false);
+
             return;
         }
         m_ShootingPoint.gameObject.SetActive(true);
@@ -218,11 +218,6 @@ private void CalculateArrowDirection()
         {
             m_ShootingHandler.SetWeapon(weapons[1].GetComponent<IWeapon>());
         }        
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            m_ShootingHandler.SetWeapon(weapons[2].GetComponent<IWeapon>());
-        }
-
         if (isShootingButtonHolding)
         {
             m_ShootingHandler.OnShoot();
