@@ -389,12 +389,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
+      propertyPath: animationClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 3098d52cfb0cbd6469165f4fdcbb3ba4, type: 2}
+    - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
       propertyPath: attackCollider
       value: 
       objectReference: {fileID: 1508934860}
     - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
+      propertyPath: attackLocation
+      value: 
+      objectReference: {fileID: 1508934857}
+    - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
       propertyPath: enemyLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
+      propertyPath: hitParticlePrefab
+      value: 
+      objectReference: {fileID: 8007103516958650179, guid: fe823b77758463a4f8c1e3d9f1af34ba, type: 3}
+    - target: {fileID: 2042198546301131595, guid: b672362373090014c9621d54df2cd436, type: 3}
+      propertyPath: animationComponent
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6093096767385650297, guid: b672362373090014c9621d54df2cd436, type: 3}
       propertyPath: m_Name

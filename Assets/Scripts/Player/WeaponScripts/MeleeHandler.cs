@@ -9,13 +9,18 @@ public class MeleeHandler : MonoBehaviour, IWeapon
     [SerializeField] private float attackRadius = 1f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float damage = 5f;
+    [SerializeField] private GameObject attackLocation;
+    [SerializeField] private GameObject hitParticlePrefab;
     private bool canShoot;
+
+
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
     {
         if (!canShoot) {return;}
+        if (hitParticlePrefab != null)
+            Instantiate(hitParticlePrefab, attackLocation.transform.position, Quaternion.identity);
         Vector2 attackDirection = (shootPoint - pivotPoint.position).normalized;
-
         RaycastHit2D[] hits = Physics2D.CircleCastAll(
             pivotPoint.position,
             attackRadius,
@@ -23,7 +28,6 @@ public class MeleeHandler : MonoBehaviour, IWeapon
             attackRange,
             enemyLayer
         );
-
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.TryGetComponent<BaseEnemy>(out var enemy))
@@ -33,7 +37,6 @@ public class MeleeHandler : MonoBehaviour, IWeapon
         }
         canShoot = false;
     }
-
 
     public void ShootEnd()
     {
