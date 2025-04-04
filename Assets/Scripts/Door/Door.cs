@@ -1,44 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    [SerializeField] Collider2D doorCollider;
-    [SerializeField] Animator uDoorAnimator;
-    [SerializeField] Animator lDoorAnimator;
-    [SerializeField] bool playerInside = false;
-    [SerializeField] LayerMask layerPlayer;
+    public InteractionType InteractionType => InteractionType.Press;
+    public float HoldDuration => 0f;
 
-
-    private void Update()
-    {
-        PlayerCheck();
-        if (playerInside == true && Input.GetKeyDown(KeyCode.E))
-        {
-            Interact();
-        }
-    }
     public void Interact()
     {
-        Destroy(doorCollider);
-
-        uDoorAnimator.SetTrigger("Open");
-        lDoorAnimator.SetTrigger("Open");
+        Destroy(gameObject);
     }
-
-    private void PlayerCheck()
+    public void HoldInteract()
     {
-         if(Physics2D.OverlapCircle(transform.position, 2f, layerPlayer))
-         {
-                playerInside = true;
-         }
-        else
-        {
-            playerInside = false;
-        }
 
     }
 
+    public void UpdateProgress(float progress)
+    {
+
+    }
+
+    public void ShowProgress()
+    {
+
+    }
+
+    public void HideProgress()
+    {
+
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum ItemType { HungerConsumable, HealthConsumable, Weapon, Buff }
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
@@ -14,6 +15,9 @@ public class InventoryItemSO : ScriptableObject
     public ItemType itemType;
     public int healthRestoreAmount;
     public int hungerRestoreAmount;
+    public float buffTime;
+    public float speedModifier;
+
 
     public void OnUseItem()
     {
@@ -32,8 +36,8 @@ public class InventoryItemSO : ScriptableObject
                 Debug.Log($"Used {itemName}");
                 Player.Instance.AddPlayerHunger(hungerRestoreAmount);
                 break;
-            case ItemType.Buff:
-                Player.Instance.
+            case ItemType.Buff when speedModifier > 1:
+                Player.Instance.SpeedModifier(speedModifier, buffTime);
                 break;
             default:
                 Debug.Log("Item Type not existed");

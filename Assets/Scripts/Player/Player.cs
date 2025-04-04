@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,24 +11,27 @@ public class Player : MonoBehaviour
 
     public MovementJoystick joystickScript;
     private Rigidbody2D playerRb;
-    public float playerSpeed;
+    public float playerSpeed = 4f;
+    public float currentSpeed;
     public float playerHunger;
     public float playerHealth;
     [SerializeField] private bool hungerDrain;
-    [SerializeField] private bool mentalDrain;
     private Vector2 moveDirection;
     public Transform m_ShootingPoint;
     public Transform triangle;
     [SerializeField] private ShootingHandler m_ShootingHandler;
     [SerializeField] private ShootingButtonHandler m_ShootingButtonHandler;
-
+    private Coroutine speedBoostRoutine;
     public event Action<float> OnHealthChanged;
     public event Action<float> OnHungerChanged;
+    private float remainingBoostTime;
 
     public GameObject bulletPrefab;
 
     Animator anim;
     private Vector2 lastMoveDirection;
+
+
 
     private void Awake()
     {
@@ -42,12 +46,11 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        currentSpeed = playerSpeed;
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
-        playerSpeed = 4f;
         playerHealth = 100f;
         playerHunger = 100f;
-        mentalDrain = true;
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         OnHealthChanged?.Invoke(playerHealth / 100f);
@@ -61,7 +64,7 @@ public class Player : MonoBehaviour
     {
         if (joystickScript != null)
         {
-            moveDirection = new Vector2(joystickScript.joystickVec.x * playerSpeed, joystickScript.joystickVec.y * playerSpeed);
+            moveDirection = new Vector2(joystickScript.joystickVec.x * currentSpeed, joystickScript.joystickVec.y * currentSpeed);
             playerRb.velocity = moveDirection;
         }
 
@@ -110,7 +113,7 @@ public class Player : MonoBehaviour
 
 
 
-    private void CalculateArrowDirection()
+private void CalculateArrowDirection()
     {
         if (moveDirection == Vector2.zero)
         {
@@ -164,9 +167,17 @@ public class Player : MonoBehaviour
 
     public void SpeedModifier(float amount, float time)
     {
-        StartCouroutine();
-        playerSpeed * amount;
+        if (amount > currentSpeed / playerSpeed)
+        {
+            currentSpeed = playerSpeed * amount;
+        }
+
+        remainingBoostTime += time;
+
+        if (speedBoostRoutine == null)
+            speedBoostRoutine = StartCoroutine(SpeedBoostCountdown());
     }
+
 
     public IEnumerator HungerDrain()
     {
@@ -180,6 +191,18 @@ public class Player : MonoBehaviour
                 PlayerDead();
             }
         }
+    }
+
+    private IEnumerator SpeedBoostCountdown()
+    {
+        while (remainingBoostTime > 0)
+        {
+            remainingBoostTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        currentSpeed = playerSpeed;
+        speedBoostRoutine = null;
     }
 
     [SerializeField] private GameObject[] weapons;

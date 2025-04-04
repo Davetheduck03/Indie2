@@ -176,8 +176,9 @@ GameObject:
   - component: {fileID: 6535201614191286112}
   - component: {fileID: 6221740539303148792}
   - component: {fileID: 5870713371536521179}
+  - component: {fileID: 8954967978569550579}
   m_Layer: 3
-  m_Name: Test Dummy
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +201,7 @@ Transform:
   - {fileID: 1805210626529862485}
   - {fileID: 3806948598742934375}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9067409333346406604
 SpriteRenderer:
@@ -294,12 +295,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickScript: {fileID: 0}
-  playerSpeed: 3
+  playerSpeed: 4
+  currentSpeed: 0
   playerHunger: 0
-  playerMental: 0
   playerHealth: 0
   hungerDrain: 1
-  mentalDrain: 1
   m_ShootingPoint: {fileID: 7841662486493661781}
   triangle: {fileID: 1917342681968146449}
   m_ShootingHandler: {fileID: 5870713371536521179}
@@ -389,6 +389,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Triangle: {fileID: 1917342681968146449}
   m_PivotPoint: {fileID: 7841662486493661781}
+--- !u!114 &8954967978569550579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093096767385650297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47af8e35477fc15458b5727de527684a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactButton: {fileID: 0}
 --- !u!1 &6571642179872214820
 GameObject:
   m_ObjectHideFlags: 0
