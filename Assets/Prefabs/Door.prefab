@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 6692022955384619114}
   - component: {fileID: 5608564121584436036}
   - component: {fileID: 1547958439155596795}
+  - component: {fileID: 3798085856553462136}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -201,7 +202,7 @@ Transform:
   - {fileID: 4036895097927223336}
   - {fileID: 1748031352777602970}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5608564121584436036
 BoxCollider2D:
@@ -260,8 +261,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449ba17af2df1fe4b841cf60f1d8961c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorCollider: {fileID: 5608564121584436036}
-  layerPlayer:
+--- !u!58 &3798085856553462136
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851344597649496943}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 8
-  interactButton: {fileID: 0}
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.75
