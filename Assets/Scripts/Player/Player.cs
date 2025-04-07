@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         currentSpeed = playerSpeed;
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
-        playerHealth = 10000f;
+        playerHealth = 100f;
         playerHunger = 10000f;
         hungerDrain = true;
         StartCoroutine(HungerDrain());
@@ -127,7 +127,7 @@ private void CalculateArrowDirection()
 
     private void PlayerDead()
     {
-        SceneManager.LoadScene("Test");
+        SceneManager.LoadScene("Mall Level 1");
     }
 
     public void AddHealth(float health)
