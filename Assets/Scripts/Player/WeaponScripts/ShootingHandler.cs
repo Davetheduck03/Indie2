@@ -15,16 +15,19 @@ public class ShootingHandler : MonoBehaviour
 
     public void OnShootStart()
     {
-        activatedWeapon.ShootStart();
+        if (activatedWeapon != null)
+            activatedWeapon.ShootStart();
     }
 
     public void OnShoot()
     {
-        activatedWeapon.Shoot(m_Triangle.position, m_PivotPoint);
+        if (activatedWeapon != null)
+            activatedWeapon.Shoot(m_Triangle.position, m_PivotPoint);
     }
 
     public void OnShootEnd()
     {
-        activatedWeapon.ShootEnd();
+        if (activatedWeapon != null)
+            activatedWeapon.ShootEnd();
     }
 }

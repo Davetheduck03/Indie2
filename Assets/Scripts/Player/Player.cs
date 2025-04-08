@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,9 +26,6 @@ public class Player : MonoBehaviour
     public event Action<float> OnHealthChanged;
     public event Action<float> OnHungerChanged;
     private float remainingBoostTime;
-
-    public GameObject bulletPrefab;
-
     Animator anim;
     private Vector2 lastMoveDirection;
 
@@ -46,6 +44,8 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        primaryWeapon = null;
+        secondaryWeapon = null;
         currentSpeed = playerSpeed;
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
@@ -113,7 +113,45 @@ public class Player : MonoBehaviour
 
 
 
-private void CalculateArrowDirection()
+    public void PickupWeapon(IWeapon newWeapon, GameObject pickupPrefab)
+    {
+        if (primaryWeapon == null)
+        {
+            primaryWeapon = newWeapon;
+            primaryWeaponPickupPrefab = pickupPrefab;
+            m_ShootingHandler.SetWeapon(primaryWeapon);
+        }
+        else if (secondaryWeapon == null)
+        {
+            secondaryWeapon = newWeapon;
+            secondaryWeaponPickupPrefab = pickupPrefab;
+        }
+        else
+        {
+            DropWeapon(secondaryWeaponPickupPrefab);
+            secondaryWeapon = newWeapon;
+            secondaryWeaponPickupPrefab = pickupPrefab;
+        }
+    }
+
+    private void DropWeapon(GameObject pickupPrefab)
+    {
+        if (pickupPrefab != null)
+        {
+            Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+
+    public void SwitchWeapons()
+    {
+        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+        (primaryWeaponPickupPrefab, secondaryWeaponPickupPrefab) = (secondaryWeaponPickupPrefab, primaryWeaponPickupPrefab);
+        m_ShootingHandler.SetWeapon(primaryWeapon);
+    }
+
+
+    private void CalculateArrowDirection()
     {
         if (moveDirection == Vector2.zero)
         {
@@ -178,7 +216,6 @@ private void CalculateArrowDirection()
             speedBoostRoutine = StartCoroutine(SpeedBoostCountdown());
     }
 
-
     public IEnumerator HungerDrain()
     {
        while (hungerDrain == true)
@@ -200,24 +237,24 @@ private void CalculateArrowDirection()
             remainingBoostTime -= Time.deltaTime;
             yield return null;
         }
-
         currentSpeed = playerSpeed;
         speedBoostRoutine = null;
     }
 
-    [SerializeField] private GameObject[] weapons;
+    [SerializeField] private IWeapon primaryWeapon;
+    [SerializeField] private IWeapon secondaryWeapon;
+    private GameObject primaryWeaponPickupPrefab;
+    private GameObject secondaryWeaponPickupPrefab;
     private bool isShootingButtonHolding = false;
+    public GameObject switchButton;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            m_ShootingHandler.SetWeapon(weapons[0].GetComponent<IWeapon>());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            m_ShootingHandler.SetWeapon(weapons[1].GetComponent<IWeapon>());
-        }        
+        if(primaryWeapon != null && secondaryWeapon != null)
+        { switchButton.SetActive(true);}
+        else { switchButton.SetActive(false);}
+
+        
         if (isShootingButtonHolding)
         {
             m_ShootingHandler.OnShoot();

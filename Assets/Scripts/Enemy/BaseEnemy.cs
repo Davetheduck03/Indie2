@@ -66,7 +66,7 @@ public class BaseEnemy : MonoBehaviour
         else if (direction.x > 0.1f) transform.localScale = Vector3.one;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
         if (health > 0)

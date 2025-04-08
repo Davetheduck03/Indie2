@@ -11,7 +11,6 @@ public class TankEnemy : BaseEnemy
     [SerializeField] private LayerMask attackLayer;
     [SerializeField] private GameObject aoeIndicatorPrefab;
 
-    // Visual settings
     [SerializeField] private Color startColor = new Color(1, 0, 0, 0.2f);
     [SerializeField] private Color endColor = Color.red;
 
@@ -85,25 +84,20 @@ public class TankEnemy : BaseEnemy
     {
         if (aoeIndicatorPrefab != null)
         {
-            // Create indicator centered on enemy
             activeIndicator = Instantiate(aoeIndicatorPrefab, transform.position, Quaternion.identity);
-            activeIndicator.transform.SetParent(transform); // Make it follow the enemy
+            activeIndicator.transform.SetParent(transform);
             activeIndicator.transform.localPosition = Vector3.zero;
 
-            // Scale to match attack radius
+
             float diameter = attackRadius * 2;
             activeIndicator.transform.localScale = new Vector3(diameter, diameter, 1);
 
-            // Get and configure renderer
+
             indicatorRenderer = activeIndicator.GetComponent<SpriteRenderer>();
             if (indicatorRenderer != null)
             {
                 indicatorRenderer.color = startColor;
             }
-        }
-        else
-        {
-            Debug.LogWarning("Missing AoE Indicator Prefab!");
         }
     }
 
@@ -128,13 +122,23 @@ public class TankEnemy : BaseEnemy
         }
     }
 
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+
+        if (isCharging)
+        {
+            CleanUp();
+            nextAttackTime = chargeStartTime + chargeDuration + attackCooldown;
+        }
+    }
+
     private void ExecuteAttack()
     {
-        // Final visual burst
         if (indicatorRenderer != null)
         {
             indicatorRenderer.color = endColor;
-            Destroy(activeIndicator, 0.1f); // Brief flash before destruction
+            Destroy(activeIndicator, 0.1f);
         }
 
         ApplyDamage();

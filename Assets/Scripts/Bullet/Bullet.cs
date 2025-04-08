@@ -11,6 +11,11 @@ public class Bullet : MonoBehaviour
         SelfDestruct();
     }
 
+    void Update()
+    {
+        transform.Rotate(Vector3.forward * 720 * Time.deltaTime);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
