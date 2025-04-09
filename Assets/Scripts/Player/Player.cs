@@ -128,18 +128,17 @@ public class Player : MonoBehaviour
         }
         else
         {
-            DropWeapon(secondaryWeaponPickupPrefab);
+            GameObject oldWeaponPrefab = secondaryWeaponPickupPrefab;
             secondaryWeapon = newWeapon;
             secondaryWeaponPickupPrefab = pickupPrefab;
+            DropWeapon(oldWeaponPrefab);
         }
     }
 
     private void DropWeapon(GameObject pickupPrefab)
     {
-        if (pickupPrefab != null)
-        {
-            Instantiate(pickupPrefab, transform.position, Quaternion.identity);
-        }
+        if (primaryWeapon == null)
+        Instantiate(pickupPrefab, transform.position, Quaternion.identity);
     }
 
 
@@ -243,8 +242,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private IWeapon primaryWeapon;
     [SerializeField] private IWeapon secondaryWeapon;
-    private GameObject primaryWeaponPickupPrefab;
-    private GameObject secondaryWeaponPickupPrefab;
+    [SerializeField] private GameObject primaryWeaponPickupPrefab;
+    [SerializeField] private GameObject secondaryWeaponPickupPrefab;
     private bool isShootingButtonHolding = false;
     public GameObject switchButton;
 

@@ -17,7 +17,6 @@ public class MeleeHandler : MonoBehaviour, IWeapon, IInteractable
 
     public InteractionType InteractionType => InteractionType.Press;
 
-
     public float HoldDuration => 0f;
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
