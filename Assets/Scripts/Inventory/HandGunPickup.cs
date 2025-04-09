@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class HandGunPickup : MonoBehaviour, IInteractable
 {
-    public BaseWeapon handGun;
     public InteractionType InteractionType => InteractionType.Press;
 
     public float HoldDuration => 0f;
 
+    [SerializeField] private GameObject weaponPrefab;
+    [SerializeField] private GameObject pickupPrompt;
+
     public void Interact()
     {
-        GameObject emHo = Instantiate(handGun.gameObject, transform.position, Quaternion.identity, transform);
-        Player.Instance.PickupWeapon(emHo.GetComponent<IWeapon>(), emHo);
-        Destroy(gameObject);
+        AttemptPickup();
     }
+
+    private void AttemptPickup()
+    {
+        GameObject weaponObject = Instantiate(weaponPrefab);
+        IWeapon weapon = weaponObject.GetComponent<IWeapon>();
+
+        if (weapon != null && Player.Instance != null)
+        {
+            Player.Instance.PickupWeapon(weapon);
+            Destroy(gameObject); // Destroy pickup object
+        }
+    }
+
     public void HoldInteract()
     {
 

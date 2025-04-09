@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Bullet: {fileID: 529644666968386015, guid: 88739afa8905b3d45a123477ada60e4c, type: 3}
   cooldownTime: 1
+  pickupPrefab: {fileID: 9048378693755244387, guid: 7a67e7beac484944bb1d0d3fb6093666, type: 3}

@@ -111,46 +111,78 @@ public class Player : MonoBehaviour
         }
     }
 
+    [SerializeField] private IWeapon primaryWeapon;
+    [SerializeField] private IWeapon secondaryWeapon;
+    [SerializeField] private GameObject primaryWeaponPickupPrefab;
+    [SerializeField] private GameObject secondaryWeaponPickupPrefab;
+    private bool isShootingButtonHolding = false;
+    public GameObject switchButton;
 
-
-    public void PickupWeapon(IWeapon newWeapon, GameObject pickupPrefab)
+    public void PickupWeapon(IWeapon newWeapon)
     {
-        pickupPrefab.transform.SetParent(transform);
-        pickupPrefab.transform.localPosition = Vector2.zero;
         if (primaryWeapon == null)
         {
             primaryWeapon = newWeapon;
-            primaryWeaponPickupPrefab = pickupPrefab;
             m_ShootingHandler.SetWeapon(primaryWeapon);
+            SetWeaponActive(primaryWeapon, true);
         }
         else if (secondaryWeapon == null)
         {
             secondaryWeapon = newWeapon;
-            secondaryWeaponPickupPrefab = pickupPrefab;
+            SetWeaponActive(secondaryWeapon, false);
         }
         else
         {
-            GameObject oldWeaponPrefab = secondaryWeaponPickupPrefab;
+            // Drop current secondary and pick up new weapon
+            DropWeapon(false); // false = drop secondary
             secondaryWeapon = newWeapon;
-            secondaryWeaponPickupPrefab = pickupPrefab;
-            DropWeapon(oldWeaponPrefab);
+            SetWeaponActive(secondaryWeapon, false);
+        }
+
+    }
+
+    private void DropWeapon(bool dropPrimary)
+    {
+        IWeapon weaponToDrop = dropPrimary ? primaryWeapon : secondaryWeapon;
+
+        if (weaponToDrop != null)
+        {
+            GameObject pickupPrefab = weaponToDrop.GetPickupPrefab();
+            if (pickupPrefab != null)
+            {
+                Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+            }
+
+            MonoBehaviour weaponInstance = weaponToDrop as MonoBehaviour;
+            if (weaponInstance != null)
+            {
+                Destroy(weaponInstance.gameObject);
+            }
+
+            if (dropPrimary) primaryWeapon = null;
+            else secondaryWeapon = null;
         }
     }
 
-    private void DropWeapon(GameObject pickupPrefab)
+    private void SetWeaponActive(IWeapon weapon, bool active)
     {
-        if (primaryWeapon == null)
-        Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+        MonoBehaviour weaponBehaviour = weapon as MonoBehaviour;
+        if (weaponBehaviour != null)
+        {
+            weaponBehaviour.gameObject.SetActive(active);
+        }
     }
-
 
     public void SwitchWeapons()
     {
-        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
-        (primaryWeaponPickupPrefab, secondaryWeaponPickupPrefab) = (secondaryWeaponPickupPrefab, primaryWeaponPickupPrefab);
+        if (secondaryWeapon == null) return;
+
+        IWeapon temp = primaryWeapon;
+        primaryWeapon = secondaryWeapon;
+        secondaryWeapon = temp;
+
         m_ShootingHandler.SetWeapon(primaryWeapon);
     }
-
 
     private void CalculateArrowDirection()
     {
@@ -242,12 +274,7 @@ public class Player : MonoBehaviour
         speedBoostRoutine = null;
     }
 
-    [SerializeField] private IWeapon primaryWeapon;
-    [SerializeField] private IWeapon secondaryWeapon;
-    [SerializeField] private GameObject primaryWeaponPickupPrefab;
-    [SerializeField] private GameObject secondaryWeaponPickupPrefab;
-    private bool isShootingButtonHolding = false;
-    public GameObject switchButton;
+   
 
     private void Update()
     {

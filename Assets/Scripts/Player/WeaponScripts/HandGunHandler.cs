@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandGunHandler : BaseWeapon, IWeapon
+public class HandGunHandler : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject m_Bullet;
     private bool canShoot;
     private float nextAttackTime = 0f;
     [SerializeField] private float cooldownTime = 1f;
+    [SerializeField] private GameObject pickupPrefab;
+
+    public GameObject GetPickupPrefab()
+    {
+        return pickupPrefab;
+    }
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
     {

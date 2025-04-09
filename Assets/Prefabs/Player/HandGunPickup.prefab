@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f706b0576304a40a6b705bd93207f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handGun: {fileID: 3483658159603602806, guid: d63e4c493da5ee34082f0fbe5fe7e0df, type: 3}
+  weaponPrefab: {fileID: 721888988248146612, guid: d63e4c493da5ee34082f0fbe5fe7e0df, type: 3}
+  pickupPrompt: {fileID: 0}
 --- !u!61 &4602464361712836029
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeHandler : BaseWeapon, IWeapon
+public class MeleeHandler : MonoBehaviour, IWeapon
 {
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2f;
@@ -13,6 +13,8 @@ public class MeleeHandler : BaseWeapon, IWeapon
     private bool canShoot;
     private float nextAttackTime = 0f;
     public ParticleSystem hitEffect;
+
+    [SerializeField] private GameObject pickupPrefab;
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
     {
@@ -55,4 +57,8 @@ public class MeleeHandler : BaseWeapon, IWeapon
         }
     }
 
+    public GameObject GetPickupPrefab()
+    {
+        return pickupPrefab;
+    }
 }
