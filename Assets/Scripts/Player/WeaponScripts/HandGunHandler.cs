@@ -2,38 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandGunHandler : MonoBehaviour, IWeapon, IInteractable
+public class HandGunHandler : BaseWeapon, IWeapon
 {
     [SerializeField] private GameObject m_Bullet;
     private bool canShoot;
     private float nextAttackTime = 0f;
     [SerializeField] private float cooldownTime = 1f;
-    [SerializeField] private GameObject weaponPickupPrefab;
-
-    public InteractionType InteractionType => InteractionType.Press;
-
-
-    public float HoldDuration => 0f;
-
-    public void HideProgress()
-    {
-        
-    }
-
-    public void HoldInteract()
-    {
-        
-    }
-
-    public void Interact()
-    {  
-        IWeapon weapon = GetComponent<IWeapon>();
-        if (weapon != null)
-        {
-            Player.Instance.PickupWeapon(weapon, weaponPickupPrefab);
-            Destroy(gameObject);
-        }
-    }
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
     {
@@ -58,15 +32,5 @@ public class HandGunHandler : MonoBehaviour, IWeapon, IInteractable
         {
             canShoot = true;
         }
-    }
-
-    public void ShowProgress()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void UpdateProgress(float progress)
-    {
-        throw new System.NotImplementedException();
     }
 }

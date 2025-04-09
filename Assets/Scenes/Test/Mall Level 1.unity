@@ -389,11 +389,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandGun
       objectReference: {fileID: 0}
-    - target: {fileID: 3866006451889774515, guid: d63e4c493da5ee34082f0fbe5fe7e0df, type: 3}
+    - target: {fileID: 0}
       propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3866006451889774515, guid: d63e4c493da5ee34082f0fbe5fe7e0df, type: 3}
+    - target: {fileID: 0}
       propertyPath: m_SortingLayerID
       value: 1173578597
       objectReference: {fileID: 0}
@@ -21450,11 +21450,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762688091556032989, guid: 7069b92d94973f64ea6b8951d25f7d70, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -20.97
       objectReference: {fileID: 0}
     - target: {fileID: 762688091556032989, guid: 7069b92d94973f64ea6b8951d25f7d70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.65
       objectReference: {fileID: 0}
     - target: {fileID: 762688091556032989, guid: 7069b92d94973f64ea6b8951d25f7d70, type: 3}
       propertyPath: m_LocalPosition.z

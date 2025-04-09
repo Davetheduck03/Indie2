@@ -115,6 +115,8 @@ public class Player : MonoBehaviour
 
     public void PickupWeapon(IWeapon newWeapon, GameObject pickupPrefab)
     {
+        pickupPrefab.transform.SetParent(transform);
+        pickupPrefab.transform.localPosition = Vector2.zero;
         if (primaryWeapon == null)
         {
             primaryWeapon = newWeapon;

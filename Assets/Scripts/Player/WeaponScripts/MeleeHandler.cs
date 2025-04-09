@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeHandler : MonoBehaviour, IWeapon, IInteractable
+public class MeleeHandler : BaseWeapon, IWeapon
 {
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2f;
@@ -13,11 +13,6 @@ public class MeleeHandler : MonoBehaviour, IWeapon, IInteractable
     private bool canShoot;
     private float nextAttackTime = 0f;
     public ParticleSystem hitEffect;
-    [SerializeField] private GameObject weaponPickupPrefab;
-
-    public InteractionType InteractionType => InteractionType.Press;
-
-    public float HoldDuration => 0f;
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
     {
@@ -60,33 +55,4 @@ public class MeleeHandler : MonoBehaviour, IWeapon, IInteractable
         }
     }
 
-    public void UpdateProgress(float progress)
-    {
-
-    }
-
-    public void ShowProgress()
-    {
-
-    }
-
-    public void HideProgress()
-    {
-
-    }
-
-    public void Interact()
-    {
-        IWeapon weapon = GetComponent<IWeapon>();
-        if (weapon != null)
-        {
-            Player.Instance.PickupWeapon(weapon, weaponPickupPrefab);
-            Destroy(gameObject);
-        }
-    }
-
-    public void HoldInteract()
-    {
-
-    }
 }
