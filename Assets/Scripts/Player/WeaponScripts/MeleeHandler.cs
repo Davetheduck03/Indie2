@@ -20,7 +20,7 @@ public class MeleeHandler : MonoBehaviour, IWeapon
     {
 
         if (!canShoot) { return; }
-
+        hitEffect = Player.Instance.GetComponentInChildren<ParticleSystem>();
         hitEffect.Play();
         Vector2 attackDirection = (shootPoint - pivotPoint.position).normalized;
 

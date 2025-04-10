@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandGunPickup : MonoBehaviour, IInteractable
+public class PickUp : MonoBehaviour, IInteractable
 {
     public InteractionType InteractionType => InteractionType.Press;
 
