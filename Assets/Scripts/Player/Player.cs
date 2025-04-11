@@ -111,12 +111,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    [SerializeField] private IWeapon primaryWeapon;
-    [SerializeField] private IWeapon secondaryWeapon;
+    public IWeapon primaryWeapon;
+    public IWeapon secondaryWeapon;
     [SerializeField] private GameObject primaryWeaponPickupPrefab;
     [SerializeField] private GameObject secondaryWeaponPickupPrefab;
     private bool isShootingButtonHolding = false;
     public GameObject switchButton;
+    public event Action<IWeapon, IWeapon> OnWeaponsChanged;
+
+    private void UpdateWeaponUI()
+    {
+        OnWeaponsChanged?.Invoke(primaryWeapon, secondaryWeapon);
+    }
 
     public void PickupWeapon(IWeapon newWeapon)
     {
@@ -138,7 +144,7 @@ public class Player : MonoBehaviour
             secondaryWeapon = newWeapon;
             SetWeaponActive(secondaryWeapon, false);
         }
-
+        UpdateWeaponUI();
     }
 
     private void DropWeapon(bool dropPrimary)
@@ -162,6 +168,7 @@ public class Player : MonoBehaviour
             if (dropPrimary) primaryWeapon = null;
             else secondaryWeapon = null;
         }
+        UpdateWeaponUI();
     }
 
     private void SetWeaponActive(IWeapon weapon, bool active)
@@ -182,6 +189,7 @@ public class Player : MonoBehaviour
         secondaryWeapon = temp;
 
         m_ShootingHandler.SetWeapon(primaryWeapon);
+        UpdateWeaponUI();
     }
 
     private void CalculateArrowDirection()

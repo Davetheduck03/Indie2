@@ -13,7 +13,8 @@ public class MeleeHandler : MonoBehaviour, IWeapon
     private bool canShoot;
     private float nextAttackTime = 0f;
     public ParticleSystem hitEffect;
-
+    [SerializeField] private Sprite weaponIcon;
+    [SerializeField] private string weaponName = "Pistol";
     [SerializeField] private GameObject pickupPrefab;
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)
@@ -60,5 +61,15 @@ public class MeleeHandler : MonoBehaviour, IWeapon
     public GameObject GetPickupPrefab()
     {
         return pickupPrefab;
+    }
+
+    public Sprite GetWeaponIcon()
+    {
+        return weaponIcon;
+    }
+
+    public string GetWeaponName()
+    {
+        return weaponName;
     }
 }

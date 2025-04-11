@@ -12,6 +12,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject inventoryUI;
 
+    [SerializeField] private Image primarySlotIcon;
+    [SerializeField] private Image secondarySlotIcon;
+
+    private void Start()
+    {
+        Player.Instance.OnWeaponsChanged += UpdateWeaponDisplay;
+        UpdateWeaponDisplay(Player.Instance.primaryWeapon, Player.Instance.secondaryWeapon);
+    }
+
     private void OnEnable()
     {
         if (Player.Instance != null)
@@ -62,5 +71,32 @@ public class UIManager : MonoBehaviour
         { inventoryUI.SetActive(true); }
         else 
         { inventoryUI.SetActive(false); }
+    }
+
+    public void UpdateWeaponDisplay(IWeapon primary, IWeapon secondary)
+    {
+        if (primary != null)
+        {
+            primarySlotIcon.sprite = primary.GetWeaponIcon();
+            primarySlotIcon.enabled = true;
+
+        }
+        else
+        {
+            primarySlotIcon.enabled = false;
+
+        }
+
+        if (secondary != null)
+        {
+            secondarySlotIcon.sprite = secondary.GetWeaponIcon();
+            secondarySlotIcon.enabled = true;
+
+        }
+        else
+        {
+            secondarySlotIcon.enabled = false;
+
+        }
     }
 }

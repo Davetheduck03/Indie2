@@ -9,10 +9,22 @@ public class HandGunHandler : MonoBehaviour, IWeapon
     private float nextAttackTime = 0f;
     [SerializeField] private float cooldownTime = 1f;
     [SerializeField] private GameObject pickupPrefab;
+    [SerializeField] private Sprite weaponIcon;
+    [SerializeField] private string weaponName = "Pistol";
 
     public GameObject GetPickupPrefab()
     {
         return pickupPrefab;
+    }
+
+    public Sprite GetWeaponIcon()
+    {
+        return weaponIcon;
+    }
+
+    public string GetWeaponName()
+    {
+        return weaponName;
     }
 
     public void Shoot(Vector3 shootPoint, Transform pivotPoint)

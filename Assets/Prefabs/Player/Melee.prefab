@@ -52,4 +52,6 @@ MonoBehaviour:
   damage: 5
   cooldownTime: 1
   hitEffect: {fileID: 1355931294965419832, guid: 89915c36e85aa2843a14c80104368fd5, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 5480f8df66823544f9d7e9c7e1549dd6, type: 3}
+  weaponName: Pen
   pickupPrefab: {fileID: 216047936201806370, guid: e93f5ba7c02f0d5438c52d2fa05901fb, type: 3}
