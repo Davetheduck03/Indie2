@@ -28,7 +28,9 @@ public class Player : MonoBehaviour
     private float remainingBoostTime;
     Animator anim;
     private Vector2 lastMoveDirection;
-
+    public int hungerDrainAmount = 1;
+    public int hungerDrainAmountLarge = 2;
+    public bool inColdZone = false;
 
 
     private void Awake()
@@ -179,6 +181,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     public void SwitchWeapons()
     {
         if (secondaryWeapon == null) return;
@@ -260,7 +263,14 @@ public class Player : MonoBehaviour
     {
        while (hungerDrain == true)
         {
-            playerHunger -= 1;
+            if (inColdZone == true)
+            {
+                playerHunger -= hungerDrainAmountLarge;
+            }
+            else
+            {
+                playerHunger -= hungerDrainAmount;
+            }
             OnHungerChanged?.Invoke(playerHunger / 100f);
             yield return new WaitForSeconds(2f);
             if (playerHunger <= 0)
@@ -280,8 +290,6 @@ public class Player : MonoBehaviour
         currentSpeed = playerSpeed;
         speedBoostRoutine = null;
     }
-
-   
 
     private void Update()
     {
