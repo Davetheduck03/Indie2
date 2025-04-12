@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test/Mall Level 2.unity
     guid: 37522bb82787c034ea0324dcf46695ef
+  - enabled: 1
+    path: Assets/Scenes/Test/SuperMarket.unity
+    guid: b437e7cc40708de43a24956af28f7f09
   m_configObjects: {}

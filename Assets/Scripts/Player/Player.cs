@@ -139,8 +139,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // Drop current secondary and pick up new weapon
-            DropWeapon(false); // false = drop secondary
+            DropWeapon(false);
             secondaryWeapon = newWeapon;
             SetWeaponActive(secondaryWeapon, false);
         }
