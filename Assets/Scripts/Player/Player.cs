@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
         playerHealth = 100f;
-        playerHunger = 10000f;
+        playerHunger = 100f;
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         OnHealthChanged?.Invoke(playerHealth / 100f);
