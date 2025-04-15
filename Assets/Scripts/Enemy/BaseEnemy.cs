@@ -13,6 +13,8 @@ public class BaseEnemy : MonoBehaviour
 {
     [SerializeField] protected Animator anim;
 
+    public System.Action OnDeath;
+
     [Header("Stats")]
     [SerializeField] protected float health;
     [SerializeField] protected float speed;
@@ -83,6 +85,10 @@ public class BaseEnemy : MonoBehaviour
     public void Die()
     {
         anim.SetTrigger("Die");
+        if (OnDeath != null)
+        {
+            OnDeath();
+        }
         path.canMove = false;
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
