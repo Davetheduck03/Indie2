@@ -13,7 +13,7 @@ public class WaveSpawner : MonoBehaviour
         public float spawnInterval;
     }
 
-    public GameObject Wall;
+    public GameObject[] Wall;
     public Wave[] waves;
     public Transform[] spawnPoints;
     public float timeBetweenWaves = 5f;
@@ -47,15 +47,16 @@ public class WaveSpawner : MonoBehaviour
 
     void CompleteAllWaves()
     {
-        Wall.SetActive(false);
+        Wall[0].SetActive(false);
         isSpawning = false;
+        Wall[1].SetActive(false);
     }
 
     public void StartSpawning()
     {
         if (!isSpawning)
         {
-            Wall.SetActive(true);
+            Wall[0].SetActive(true);
             isSpawning = true;
             currentWaveIndex = 0;
             StartNextWave();

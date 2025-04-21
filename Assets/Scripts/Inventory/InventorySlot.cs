@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
@@ -16,6 +17,21 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         Item = item;
         StackCount = count;
+
+        // Force update even if UI is inactive
+        if (!gameObject.activeInHierarchy)
+        {
+            UpdateUI();
+        }
+        else
+        {
+            StartCoroutine(DelayedUpdateUI());
+        }
+    }
+
+    private IEnumerator DelayedUpdateUI()
+    {
+        yield return null;
         UpdateUI();
     }
 
