@@ -13,30 +13,22 @@ public class WaveSpawner : MonoBehaviour
         public float spawnInterval;
     }
 
+    public GameObject Wall;
     public Wave[] waves;
     public Transform[] spawnPoints;
     public float timeBetweenWaves = 5f;
 
     private Wave currentWave;
     private int currentWaveIndex;
-    private bool canSpawn = true;
+    private bool canSpawn = false;
     private float nextSpawnTime;
     private int enemiesRemainingToSpawn;
     private int enemiesRemainingAlive;
-
-    void Start()
-    {
-        if (spawnPoints.Length != 4)
-        {
-            Debug.LogError("Please assign exactly 4 spawn points");
-        }
-
-        StartNextWave();
-    }
+    private bool isSpawning = false;
 
     void Update()
     {
-        if (canSpawn && enemiesRemainingToSpawn > 0 && Time.time >= nextSpawnTime)
+        if (isSpawning && canSpawn && enemiesRemainingToSpawn > 0 && Time.time >= nextSpawnTime)
         {
             SpawnEnemy();
             enemiesRemainingToSpawn--;
@@ -47,14 +39,39 @@ public class WaveSpawner : MonoBehaviour
                 canSpawn = false;
             }
         }
+        if (isSpawning && currentWaveIndex >= waves.Length && enemiesRemainingAlive == 0)
+        {
+            CompleteAllWaves();
+        }
+    }
+
+    void CompleteAllWaves()
+    {
+        Wall.SetActive(false);
+        isSpawning = false;
+    }
+
+    public void StartSpawning()
+    {
+        if (!isSpawning)
+        {
+            Wall.SetActive(true);
+            isSpawning = true;
+            currentWaveIndex = 0;
+            StartNextWave();
+        }
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
+        CancelInvoke(nameof(StartNextWave));
     }
 
     void SpawnEnemy()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
         GameObject enemyPrefab = currentWave.enemyPrefabs[Random.Range(0, currentWave.enemyPrefabs.Length)];
-
         GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
         BaseEnemy enemyScript = enemy.GetComponent<BaseEnemy>();
@@ -62,27 +79,32 @@ public class WaveSpawner : MonoBehaviour
         {
             enemyScript.OnDeath += OnEnemyDeath;
         }
+        else
+        {
+            Debug.LogWarning("Enemy prefab missing Enemy script");
+        }
     }
-
-    
 
     void OnEnemyDeath()
     {
         enemiesRemainingAlive--;
 
-        if (currentWaveIndex >= waves.Length && enemiesRemainingAlive == 0)
+        if (isSpawning)
         {
-            Debug.Log("All waves completed!");
-        }
-        else if (enemiesRemainingToSpawn == 0 && enemiesRemainingAlive == 0)
-        {
-            Invoke("StartNextWave", timeBetweenWaves);
+            if (currentWaveIndex >= waves.Length && enemiesRemainingAlive == 0)
+            {
+                Debug.Log("All waves completed!");
+            }
+            else if (enemiesRemainingToSpawn == 0 && enemiesRemainingAlive == 0)
+            {
+                Invoke(nameof(StartNextWave), timeBetweenWaves);
+            }
         }
     }
 
     void StartNextWave()
     {
-        if (currentWaveIndex < waves.Length)
+        if (isSpawning && currentWaveIndex < waves.Length)
         {
             currentWave = waves[currentWaveIndex];
             enemiesRemainingToSpawn = currentWave.enemyCount;
@@ -92,15 +114,10 @@ public class WaveSpawner : MonoBehaviour
             Debug.Log("Starting Wave: " + currentWave.waveName);
             currentWaveIndex++;
         }
+
     }
 
-    public int GetCurrentWaveNumber()
-    {
-        return currentWaveIndex;
-    }
-
-    public int GetTotalWaves()
-    {
-        return waves.Length;
-    }
+    public int GetCurrentWaveNumber() => currentWaveIndex;
+    public int GetTotalWaves() => waves.Length;
+    public bool IsSpawningActive() => isSpawning;
 }
