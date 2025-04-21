@@ -49,7 +49,10 @@ public class WaveSpawner : MonoBehaviour
     {
         Wall[0].SetActive(false);
         isSpawning = false;
-        Wall[1].SetActive(false);
+        if (Wall[1] == null) return;
+        else {Wall[1].SetActive(false);}
+        if (Wall[2] == null) return;
+        else {Wall[2].SetActive(false);}
     }
 
     public void StartSpawning()

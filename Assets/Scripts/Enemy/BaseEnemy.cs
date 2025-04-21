@@ -22,7 +22,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float coin;
 
     [Header("Detection")]
-    [SerializeField] protected float detectionRadius = 8f;
+    [SerializeField] protected float detectionRadius = 12f;
     [SerializeField] protected LayerMask playerLayer;
     protected Transform playerPos;
     protected Vector2 movementDirection;
