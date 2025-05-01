@@ -35,6 +35,7 @@ IUnityAdsShowListener
         this.onShowFailed = onShowFailed;
         Advertisement.Show("Rewarded_Android", this);
     }
+
     public void OnInitializationComplete()
     {
         Debug.Log("Init Completed");

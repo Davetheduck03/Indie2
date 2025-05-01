@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test/SuperMarket.unity
     guid: b437e7cc40708de43a24956af28f7f09
+  - enabled: 1
+    path: Assets/Scenes/Test/To Be Continued.unity
+    guid: d002300ca8cefd54e84d67cc49f177bf
   m_configObjects: {}

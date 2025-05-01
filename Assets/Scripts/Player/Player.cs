@@ -46,13 +46,46 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        playerDied = false;
         primaryWeapon = null;
         secondaryWeapon = null;
         currentSpeed = playerSpeed;
         anim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody2D>();
-        playerHealth = 100f;
-        playerHunger = 100f;
+
+        if (GameManager.Instance != null && GameManager.Instance.hasSavedData)
+        {
+            playerHealth = GameManager.Instance.savedHealth;
+            playerHunger = GameManager.Instance.savedHunger;
+            if (GameManager.Instance.savedPrimaryWeaponPrefab != null)
+            {
+                PickUp primaryPickup = GameManager.Instance.savedPrimaryWeaponPrefab.GetComponent<PickUp>();
+                if (primaryPickup != null && primaryPickup.weaponPrefab != null)
+                {
+                    GameObject weaponObj = Instantiate(primaryPickup.weaponPrefab, transform);
+                    IWeapon weapon = weaponObj.GetComponent<IWeapon>();
+                    if (weapon != null)
+                        PickupWeapon(weapon);
+                }
+            }
+            if (GameManager.Instance.savedSecondaryWeaponPrefab != null)
+            {
+                PickUp secondaryPickup = GameManager.Instance.savedSecondaryWeaponPrefab.GetComponent<PickUp>();
+                if (secondaryPickup != null && secondaryPickup.weaponPrefab != null)
+                {
+                    GameObject weaponObj = Instantiate(secondaryPickup.weaponPrefab, transform);
+                    IWeapon weapon = weaponObj.GetComponent<IWeapon>();
+                    if (weapon != null)
+                        PickupWeapon(weapon);
+                }
+            }
+        }
+        else
+        {
+            playerHealth = 100f;
+            playerHunger = 100f;
+        }
+
         hungerDrain = true;
         StartCoroutine(HungerDrain());
         OnHealthChanged?.Invoke(playerHealth / 100f);
@@ -61,19 +94,38 @@ public class Player : MonoBehaviour
         m_ShootingButtonHandler.onPointerUp += OnShootButtonUp;
     }
 
-
+    public void PlayerDead()
+    {
+        playerDied = true;
+        GameManager.Instance.hasSavedData = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private Vector2 currentMovementInput;
     void FixedUpdate()
     {
-        if (joystickScript != null)
-        {
-            moveDirection = new Vector2(joystickScript.joystickVec.x * currentSpeed, joystickScript.joystickVec.y * currentSpeed);
-            playerRb.velocity = moveDirection;
-        }
+        Vector2 keyboardInputRaw = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector2 keyboardInput = keyboardInputRaw.normalized;
 
+        if (keyboardInputRaw != Vector2.zero)
+        {
+            // Use keyboard input
+            currentMovementInput = keyboardInput;
+            moveDirection = currentMovementInput * currentSpeed;
+        }
+        else if (joystickScript != null && joystickScript.joystickVec != Vector2.zero)
+        {
+            // Use joystick input
+            currentMovementInput = joystickScript.joystickVec;
+            moveDirection = currentMovementInput * currentSpeed;
+        }
         else
         {
-            playerRb.velocity = Vector2.zero;
+            // No input
+            currentMovementInput = Vector2.zero;
+            moveDirection = Vector2.zero;
         }
+
+        playerRb.velocity = moveDirection;
         CalculateArrowDirection();
         ProcessInput();
         Animate();
@@ -82,23 +134,19 @@ public class Player : MonoBehaviour
     void Animate()
     {
 
-        if (joystickScript.joystickVec.magnitude > 0)
+        if (currentMovementInput.magnitude > 0)
         {
-            anim.SetFloat("MoveX", joystickScript.joystickVec.x);
-            anim.SetFloat("MoveY", joystickScript.joystickVec.y);
-            anim.SetFloat("MoveMagnitude", joystickScript.joystickVec.magnitude);
-
-
-            lastMoveDirection = joystickScript.joystickVec;
+            anim.SetFloat("MoveX", currentMovementInput.x);
+            anim.SetFloat("MoveY", currentMovementInput.y);
+            anim.SetFloat("MoveMagnitude", currentMovementInput.magnitude);
+            lastMoveDirection = currentMovementInput;
         }
         else
         {
-
             anim.SetFloat("MoveX", lastMoveDirection.x);
             anim.SetFloat("MoveY", lastMoveDirection.y);
             anim.SetFloat("MoveMagnitude", 0);
         }
-
 
         anim.SetFloat("LastMoveX", lastMoveDirection.x);
         anim.SetFloat("LastMoveY", lastMoveDirection.y);
@@ -107,9 +155,9 @@ public class Player : MonoBehaviour
 
     void ProcessInput()
     {
-        if (joystickScript.joystickVec.magnitude > 0)
+        if (currentMovementInput.magnitude > 0)
         {
-            lastMoveDirection = joystickScript.joystickVec;
+            lastMoveDirection = currentMovementInput;
         }
     }
 
@@ -119,6 +167,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject secondaryWeaponPickupPrefab;
     private bool isShootingButtonHolding = false;
     public GameObject switchButton;
+    [SerializeField] private bool playerDied;
+
     public event Action<IWeapon, IWeapon> OnWeaponsChanged;
 
     private void UpdateWeaponUI()
@@ -206,11 +256,6 @@ public class Player : MonoBehaviour
         m_ShootingPoint.rotation = Quaternion.Euler(new Vector3(0, 0, -angle));
     }
 
-    private void PlayerDead()
-    {
-        SceneManager.LoadScene("Mall Level 1");
-    }
-
     public void AddHealth(float health)
     {
         if(playerHealth >= 100)
@@ -291,6 +336,19 @@ public class Player : MonoBehaviour
         speedBoostRoutine = null;
     }
 
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null && !GameManager.isExiting && !playerDied)
+        {
+            GameManager.Instance.savedHealth = playerHealth;
+            GameManager.Instance.savedHunger = playerHunger;
+            GameManager.Instance.savedPrimaryWeaponPrefab = primaryWeapon != null ? primaryWeapon.GetPickupPrefab() : null;
+            GameManager.Instance.savedSecondaryWeaponPrefab = secondaryWeapon != null ? secondaryWeapon.GetPickupPrefab() : null;
+            GameManager.Instance.hasSavedData = true;
+        }
+    }
+
+
     private void Update()
     {
         if(primaryWeapon != null && secondaryWeapon != null)
@@ -315,4 +373,5 @@ public class Player : MonoBehaviour
         m_ShootingHandler.OnShootEnd();
         isShootingButtonHolding = false;
     }
+
 }

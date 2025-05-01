@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class NextLevel : MonoBehaviour
 {
-    [SerializeField] private int sceneNum;
+    [SerializeField] private string scene;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene(sceneNum);
+            GameManager.Instance.SavePlayerStats(Player.Instance.playerHealth, Player.Instance.playerHunger);
+            SceneManager.LoadScene(scene);
         }
     }
 }

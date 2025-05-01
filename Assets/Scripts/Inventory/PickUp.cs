@@ -8,8 +8,7 @@ public class PickUp : MonoBehaviour, IInteractable
 
     public float HoldDuration => 0f;
 
-    [SerializeField] private GameObject weaponPrefab;
-    [SerializeField] private GameObject pickupPrompt;
+    [SerializeField] public GameObject weaponPrefab;
 
     public void Interact()
     {
@@ -24,7 +23,7 @@ public class PickUp : MonoBehaviour, IInteractable
         if (weapon != null && Player.Instance != null)
         {
             Player.Instance.PickupWeapon(weapon);
-            Destroy(gameObject); // Destroy pickup object
+            Destroy(gameObject);
         }
     }
 

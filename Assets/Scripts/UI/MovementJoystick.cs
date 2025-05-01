@@ -11,13 +11,15 @@ public class MovementJoystick : MonoBehaviour
     public Vector2 joystickVec;
     private Vector2 joystickTouchPos;
     private Vector2 joystickOGPos;
+    private Vector2 joystickBGOGPos;
     private float joystickRad;
 
-   
+
 
     void Start()
     {
-        joystickOGPos = joystickBG.transform.position;
+        joystickOGPos = joystick.transform.localPosition;
+        joystickBGOGPos = joystickBG.transform.localPosition;  // Store BG's original position
         joystickRad = joystickBG.GetComponent<RectTransform>().sizeDelta.y / 4;
     }
 
@@ -27,7 +29,7 @@ public class MovementJoystick : MonoBehaviour
         joystickBG.transform.position = Input.mousePosition;
         joystickTouchPos = Input.mousePosition;
     }
-   
+
     public void JoyStickDrag(BaseEventData baseEventData)
     {
         PointerEventData pointerEventData = baseEventData as PointerEventData;
@@ -36,11 +38,10 @@ public class MovementJoystick : MonoBehaviour
 
         float joystickDist = Vector2.Distance(dragPos, joystickTouchPos);
 
-        if(joystickDist < joystickRad) 
+        if (joystickDist < joystickRad)
         {
             joystick.transform.position = joystickTouchPos + joystickVec * joystickDist;
         }
-
         else
         {
             joystick.transform.position = joystickTouchPos + joystickVec * joystickRad;
@@ -50,8 +51,8 @@ public class MovementJoystick : MonoBehaviour
     public void PointerUp()
     {
         joystickVec = Vector2.zero;
-        joystick.transform.position = joystickOGPos;
-        joystickBG.transform.position= joystickOGPos;
+        joystick.transform.localPosition = joystickOGPos;
+        joystickBG.transform.localPosition = joystickBGOGPos;  // Reset BG to its original position
     }
 
     public Vector2 GetJoyStickVec()

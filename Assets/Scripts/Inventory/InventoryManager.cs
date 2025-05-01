@@ -177,7 +177,6 @@ public class InventoryManager : MonoBehaviour
             slot.SetItem(data.item, data.count);
     }
 
-    // Struct to hold inventory data
     [System.Serializable]
     public struct InventoryItemData
     {

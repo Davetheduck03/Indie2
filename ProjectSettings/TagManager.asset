@@ -9,6 +9,12 @@ TagManager:
   - CerealBullet
   - Weapon
   - InventoryPanel
+  - HealthBar
+  - HungerBar
+  - PrimaryWeaponIcon
+  - SecondaryWeaponIcon
+  - InventoryUI
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

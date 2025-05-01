@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -15,8 +16,87 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image primarySlotIcon;
     [SerializeField] private Image secondarySlotIcon;
 
+
+    private static UIManager _instance;
+    public static UIManager Instance {get{return _instance; }}
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindUIComponents();
+        SetupPlayerEvents();
+    }
+
+    private void FindUIComponents()
+    {
+        var allImages = FindObjectsByType<Image>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var img in allImages)
+        {
+            if (img.CompareTag("HealthBar")) healthBar = img;
+            if (img.CompareTag("HungerBar")) hungerBar = img;
+            if (img.CompareTag("PrimaryWeaponIcon")) primarySlotIcon = img;
+            if (img.CompareTag("SecondaryWeaponIcon")) secondarySlotIcon = img;
+        }
+
+        var inventoryObjs = FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var obj in inventoryObjs)
+        {
+            if (obj.CompareTag("InventoryUI"))
+            {
+                inventoryUI = obj;
+                break;
+            }
+        }
+    }
+
+    private void SetupPlayerEvents()
+    {
+        if (Player.Instance != null)
+        {
+            Player.Instance.OnHealthChanged += UpdateHealthBar;
+            Player.Instance.OnHungerChanged += UpdateHungerBar;
+            Player.Instance.OnWeaponsChanged += UpdateWeaponDisplay;
+
+            UpdateHealthBar(Player.Instance.playerHealth / 100f);
+            UpdateHungerBar(Player.Instance.playerHunger / 100f);
+            UpdateWeaponDisplay(Player.Instance.primaryWeapon, Player.Instance.secondaryWeapon);
+        }
+        else
+        {
+            StartCoroutine(WaitForPlayerInstance());
+        }
+    }
+
+    private IEnumerator WaitForPlayerInstance()
+    {
+        while (Player.Instance == null)
+        {
+            yield return null;
+        }
+        SetupPlayerEvents();
+    }
+
     private void Start()
     {
+        
         Player.Instance.OnWeaponsChanged += UpdateWeaponDisplay;
         UpdateWeaponDisplay(Player.Instance.primaryWeapon, Player.Instance.secondaryWeapon);
     }
@@ -28,26 +108,9 @@ public class UIManager : MonoBehaviour
             Player.Instance.OnHealthChanged += UpdateHealthBar;
             Player.Instance.OnHungerChanged += UpdateHungerBar;
         }
-        else
-        {
-            Debug.LogError("Player instance not found!");
-            StartCoroutine(WaitForPlayerInstance());
-        }
     }
 
-    private IEnumerator WaitForPlayerInstance()
-    {
-        while (Player.Instance == null)
-        {
-            yield return null;
-        }
-
-        Player.Instance.OnHealthChanged += UpdateHealthBar;
-        Player.Instance.OnHungerChanged += UpdateHungerBar;
-
-        UpdateHealthBar(Player.Instance.playerHealth / 100f);
-        UpdateHungerBar(Player.Instance.playerHunger / 100f);
-    }
+    
 
     private void OnDisable()
     {
@@ -67,10 +130,27 @@ public class UIManager : MonoBehaviour
 
     public void EnableInventoryUI()
     {
-        if (!inventoryUI.activeSelf)
-        { inventoryUI.SetActive(true); }
-        else 
-        { inventoryUI.SetActive(false); }
+        if (inventoryUI == null)
+        {
+            FindUIComponents();
+        }
+
+        if (inventoryUI != null)
+        {
+            if(!inventoryUI.activeSelf)
+            {inventoryUI.SetActive(true); }
+            else { inventoryUI.SetActive(false); }
+
+           
+            if (InventoryManager.Instance != null)
+            {
+                InventoryManager.Instance.MarkForUIUpdate();
+            }
+        }
+        else
+        {
+            Debug.LogError("Inventory UI reference is missing!");
+        }
     }
 
     public void UpdateWeaponDisplay(IWeapon primary, IWeapon secondary)

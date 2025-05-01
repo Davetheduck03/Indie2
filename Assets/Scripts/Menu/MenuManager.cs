@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Button StartGameButton;
     public Button SettingButton;
 
@@ -16,7 +15,6 @@ public class MenuManager : MonoBehaviour
         SettingButton.onClick.AddListener(Setting);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
